@@ -1,8 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:flutter_login/widgets.dart';
-import 'package:flutter_login/theme.dart';
 import 'transition_route_observer.dart';
 import 'widgets/fade_in.dart';
 import 'constants.dart';
@@ -83,18 +81,18 @@ class _DashboardScreenState extends State<DashboardScreen>
             child: Hero(
               tag: Constants.logoTag,
               child: Image.asset(
-                'assets/images/ecorp.png',
+                'assets/images/logo2-tri-scribe.png',
                 filterQuality: FilterQuality.high,
                 height: 30,
               ),
             ),
           ),
-          HeroText(
+          /*HeroText(
             Constants.appName,
             tag: Constants.titleTag,
             viewState: ViewState.shrunk,
             style: LoginThemeHelper.loginTextStyle,
-          ),
+          ),*/
           SizedBox(width: 20),
         ],
       ),
@@ -199,7 +197,7 @@ class _DashboardScreenState extends State<DashboardScreen>
         vertical: 20,
       ),
       childAspectRatio: .9,
-      // crossAxisSpacing: 5,
+      crossAxisSpacing: 5,
       crossAxisCount: 3,
       children: [
         _buildButton(
@@ -304,7 +302,7 @@ class _DashboardScreenState extends State<DashboardScreen>
                     ),
                     Expanded(
                       flex: 8,
-                      child: ShaderMask(
+                      /*child: ShaderMask(
                         // blendMode: BlendMode.srcOver,
                         shaderCallback: (Rect bounds) {
                           return LinearGradient(
@@ -312,18 +310,16 @@ class _DashboardScreenState extends State<DashboardScreen>
                             end: Alignment.bottomRight,
                             tileMode: TileMode.clamp,
                             colors: <Color>[
-                              Colors.deepPurpleAccent.shade100,
-                              Colors.deepPurple.shade100,
-                              Colors.deepPurple.shade100,
-                              Colors.deepPurple.shade100,
-                              // Colors.red,
-                              // Colors.yellow,
+                              Colors.white,
+                              Colors.white,
+                              Colors.white,
+                              Colors.white,
                             ],
                           ).createShader(bounds);
-                        },
-                        child: _buildDashboardGrid(),
-                      ),
+                        },*/
+                      child: _buildDashboardGrid(),
                     ),
+                    //    ),
                   ],
                 ),
                 if (!kReleaseMode) _buildDebugButtons(),
