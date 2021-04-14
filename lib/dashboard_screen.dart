@@ -202,35 +202,27 @@ class _DashboardScreenState extends State<DashboardScreen>
       children: [
         _buildButton(
           icon: Icon(FontAwesomeIcons.user),
-          label: 'Profile',
+          label: 'Patient',
           interval: Interval(0, aniInterval),
         ),
         _buildButton(
-          icon: Container(
-            // fix icon is not centered like others for some reasons
-            padding: const EdgeInsets.only(left: 16.0),
-            alignment: Alignment.centerLeft,
-            child: Icon(
-              FontAwesomeIcons.moneyBillAlt,
-              size: 20,
-            ),
-          ),
-          label: 'Fund Transfer',
+          icon: Icon(Icons.calendar_today_outlined),
+          label: 'Appointment',
           interval: Interval(step, aniInterval + step),
         ),
         _buildButton(
-          icon: Icon(FontAwesomeIcons.handHoldingUsd),
-          label: 'Payment',
+          icon: Icon(Icons.perm_contact_cal_rounded),
+          label: 'Contacts',
           interval: Interval(step * 2, aniInterval + step * 2),
         ),
         _buildButton(
           icon: Icon(FontAwesomeIcons.chartLine),
-          label: 'Report',
+          label: 'Analytics',
           interval: Interval(0, aniInterval),
         ),
         _buildButton(
-          icon: Icon(Icons.vpn_key),
-          label: 'Register',
+          icon: Icon(Icons.approval),
+          label: 'Approval',
           interval: Interval(step, aniInterval + step),
         ),
         _buildButton(
