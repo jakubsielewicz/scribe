@@ -6,14 +6,14 @@ import 'constants.dart';
 import 'widgets/animated_numeric_text.dart';
 import 'widgets/round_button.dart';
 
-class DashboardScreen extends StatefulWidget {
-  static const routeName = '/dashboard';
+class PatientSearchScreen extends StatefulWidget {
+  static const routeName = '/patientsearch';
 
   @override
-  _DashboardScreenState createState() => _DashboardScreenState();
+  _PatientSearchScreenState createState() => _PatientSearchScreenState();
 }
 
-class _DashboardScreenState extends State<DashboardScreen>
+class _PatientSearchScreenState extends State<PatientSearchScreen>
     with SingleTickerProviderStateMixin, TransitionRouteAware {
   Future<bool> _goToLogin(BuildContext context) {
     return Navigator.of(context)

@@ -8,7 +8,7 @@ class AnimatedNumericText extends StatelessWidget {
     required this.targetValue,
     required this.controller,
     this.curve = Curves.linear,
-    this.formatter = '#,##0.00',
+    this.formatter = '#,##0',
     this.style,
   })  : numberFormat = NumberFormat(formatter),
         numberAnimation = Tween<double>(

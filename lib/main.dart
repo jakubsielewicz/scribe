@@ -1,7 +1,8 @@
 import 'package:flutter/services.dart';
 import 'package:flutter/material.dart';
-import 'dashboard_screen.dart';
 import 'login_screen.dart';
+import 'dashboard_screen.dart';
+import 'patient_search_screen.dart';
 import 'transition_route_observer.dart';
 
 void main() {
@@ -29,7 +30,7 @@ class MyApp extends StatelessWidget {
           headline3: TextStyle(
             fontFamily: 'OpenSans',
             fontSize: 45.0,
-            // fontWeight: FontWeight.w400,
+            fontWeight: FontWeight.w400,
             color: Colors.orange,
           ),
           button: TextStyle(
@@ -60,6 +61,7 @@ class MyApp extends StatelessWidget {
       routes: {
         LoginScreen.routeName: (context) => LoginScreen(),
         DashboardScreen.routeName: (context) => DashboardScreen(),
+        PatientSearchScreen.routeName: (context) => PatientSearchScreen(),
       },
     );
   }
