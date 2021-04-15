@@ -80,7 +80,7 @@ class _DashboardScreenState extends State<DashboardScreen>
             child: Hero(
               tag: Constants.logoTag,
               child: Image.asset(
-                'assets/images/logo2-tri-scribe.png',
+                'assets/images/logo-horz.png',
                 filterQuality: FilterQuality.high,
                 height: 30,
               ),
@@ -140,14 +140,17 @@ class _DashboardScreenState extends State<DashboardScreen>
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
+                /*SizedBox(
+                  width: 5,
+                  height: 0.1,
+                ),*/
                 Text(
-                  'You have',
-                  style: theme.textTheme.headline6!.copyWith(
+                  'You have ',
+                  style: theme.textTheme.headline5!.copyWith(
                     fontWeight: FontWeight.w300,
-                    color: accentColor.shade400,
+                    color: accentColor.shade600,
                   ),
                 ),
-                SizedBox(width: 5),
                 AnimatedNumericText(
                   initialValue: 1,
                   targetValue: 7,
@@ -155,24 +158,30 @@ class _DashboardScreenState extends State<DashboardScreen>
                   controller: _loadingController!,
                   style: theme.textTheme.headline5!.copyWith(
                     fontWeight: FontWeight.w600,
-                    color: accentColor.shade400,
+                    color: accentColor.shade600,
                   ),
                 ),
                 Text(
                   ' new notifications',
-                  style: theme.textTheme.headline6!.copyWith(
+                  style: theme.textTheme.headline5!.copyWith(
                     fontWeight: FontWeight.w300,
-                    color: accentColor.shade400,
+                    color: accentColor.shade600,
                   ),
                 ),
               ],
             ),
-            _buildButton(
+            /*_buildButton(
               icon: Icon(Icons.notification_important),
               label: 'View all',
-              interval: Interval(0, 0.75),
+              interval: Interval(0.04, 0.8),
+            ),*/
+            Text(
+              'View all',
+              style: theme.textTheme.bodyText1!.copyWith(
+                fontWeight: FontWeight.w300,
+                color: accentColor.shade600,
+              ),
             ),
-            //Text('View all', style: theme.textTheme.caption),
           ],
         ),
       ),
@@ -209,12 +218,12 @@ class _DashboardScreenState extends State<DashboardScreen>
       children: [
         _buildButton(
           icon: Icon(FontAwesomeIcons.user),
-          label: 'Patient',
+          label: 'Patients',
           interval: Interval(0, aniInterval),
         ),
         _buildButton(
           icon: Icon(Icons.calendar_today_outlined),
-          label: 'Appointment',
+          label: 'Appointments',
           interval: Interval(step, aniInterval + step),
         ),
         _buildButton(
@@ -229,7 +238,7 @@ class _DashboardScreenState extends State<DashboardScreen>
         ),
         _buildButton(
           icon: Icon(Icons.approval),
-          label: 'Approval',
+          label: 'Approvals',
           interval: Interval(step, aniInterval + step),
         ),
         _buildButton(

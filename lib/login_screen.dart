@@ -36,10 +36,10 @@ class LoginScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return FlutterLogin(
+      logo: 'assets/images/logo-vert.png',
+      logoTag: Constants.logoTag,
       //title: Constants.appName,
       //titleTag: Constants.titleTag,
-      logo: 'assets/images/logo2-tri-scribe.png',
-      logoTag: Constants.logoTag,
       // loginAfterSignUp: false,
       // hideForgotPasswordButton: true,
       // hideSignUpButton: true,

@@ -1,5 +1,5 @@
 class Constants {
-  static const String appName = 'intelamp.scribe';
-  static const String logoTag = 'intelamp.login.logo';
-  static const String titleTag = 'intelamp.login.title';
+  static const String appName = 'IntelAmp.Scribe';
+  static const String logoTag = 'IntelAmp.login.logo';
+  static const String titleTag = 'IntelAmp.login.title';
 }

@@ -38,9 +38,8 @@ dev_dependencies:
 flutter:
   uses-material-design: true
   assets:
-     - assets/images/logo1-black.png
-     - assets/images/logo2-tri-scribe.png
-     - assets/images/logo3-black-scribe.png
+     - assets/images/logo-vert.png
+     - assets/images/logo-horz.png
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.
