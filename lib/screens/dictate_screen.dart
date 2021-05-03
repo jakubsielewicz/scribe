@@ -1,23 +1,25 @@
+import 'package:avatar_glow/avatar_glow.dart';
 import 'package:flutter/material.dart';
+//import 'package:highlight_text/highlight_text.dart';
+// ignore: import_of_legacy_library_into_null_safe
+import 'package:speech_to_text/speech_to_text.dart' as stt;
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'transition_route_observer.dart';
-import 'widgets/fade_in.dart';
-import 'constants.dart';
-import 'widgets/animated_numeric_text.dart';
-import 'widgets/round_button.dart';
+import '../utilities/transition_route_observer.dart';
+import '../widgets/fade_in.dart';
+import '../utilities/constants.dart';
 
-class PatientSearchScreen extends StatefulWidget {
-  static const routeName = '/patientsearch';
+class DictateScreen extends StatefulWidget {
+  static const routeName = '/dictate';
 
   @override
-  _PatientSearchScreenState createState() => _PatientSearchScreenState();
+  _DictateScreenState createState() => _DictateScreenState();
 }
 
-class _PatientSearchScreenState extends State<PatientSearchScreen>
+class _DictateScreenState extends State<DictateScreen>
     with SingleTickerProviderStateMixin, TransitionRouteAware {
-  Future<bool> _goToLogin(BuildContext context) {
+  Future<bool> _goToDashboard(BuildContext context) {
     return Navigator.of(context)
-        .pushReplacementNamed('/')
+        .pushReplacementNamed('/dashboard')
         // we dont want to pop the screen, just replace it completely
         .then((_) => false);
   }
@@ -26,6 +28,11 @@ class _PatientSearchScreenState extends State<PatientSearchScreen>
   static const headerAniInterval = Interval(.1, .3, curve: Curves.easeOut);
   late Animation<double> _headerScaleAnimation;
   AnimationController? _loadingController;
+
+  late stt.SpeechToText _speech;
+  bool _isListening = false;
+  String _text = 'Press the button and start speaking';
+  double _confidence = 1.0;
 
   @override
   void initState() {
@@ -41,6 +48,8 @@ class _PatientSearchScreenState extends State<PatientSearchScreen>
       parent: _loadingController!,
       curve: headerAniInterval,
     ));
+
+    _speech = stt.SpeechToText();
   }
 
   @override
@@ -66,10 +75,10 @@ class _PatientSearchScreenState extends State<PatientSearchScreen>
       icon: const Icon(FontAwesomeIcons.bars),
       onPressed: () {},
     );
-    final signOutBtn = IconButton(
-      icon: const Icon(FontAwesomeIcons.signOutAlt),
+    final dashboardBtn = IconButton(
+      icon: Icon(Icons.home_rounded),
       color: theme.accentColor,
-      onPressed: () => _goToLogin(context),
+      onPressed: () => _goToDashboard(context),
     );
     final title = Center(
       child: Row(
@@ -80,18 +89,12 @@ class _PatientSearchScreenState extends State<PatientSearchScreen>
             child: Hero(
               tag: Constants.logoTag,
               child: Image.asset(
-                'assets/images/logo2-tri-scribe.png',
+                'assets/images/logo-horz.png',
                 filterQuality: FilterQuality.high,
                 height: 30,
               ),
             ),
           ),
-          /*HeroText(
-            Constants.appName,
-            tag: Constants.titleTag,
-            viewState: ViewState.shrunk,
-            style: LoginThemeHelper.loginTextStyle,
-          ),*/
           SizedBox(width: 20),
         ],
       ),
@@ -111,7 +114,7 @@ class _PatientSearchScreenState extends State<PatientSearchScreen>
           offset: .3,
           curve: headerAniInterval,
           fadeDirection: FadeDirection.endToStart,
-          child: signOutBtn,
+          child: dashboardBtn,
         ),
       ],
       title: title,
@@ -141,36 +144,15 @@ class _PatientSearchScreenState extends State<PatientSearchScreen>
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
                 Text(
-                  'You have',
-                  style: theme.textTheme.headline6!.copyWith(
-                    fontWeight: FontWeight.w300,
-                    color: accentColor.shade400,
-                  ),
-                ),
-                SizedBox(width: 5),
-                AnimatedNumericText(
-                  initialValue: 1,
-                  targetValue: 7,
-                  curve: Interval(0, 1, curve: Curves.easeOut),
-                  controller: _loadingController!,
+                  'Dictate',
                   style: theme.textTheme.headline5!.copyWith(
-                    fontWeight: FontWeight.w600,
+                    fontWeight: FontWeight.w300,
                     color: accentColor.shade400,
                   ),
                 ),
                 Text(
-                  ' new notifications',
-                  style: theme.textTheme.headline6!.copyWith(
-                    fontWeight: FontWeight.w300,
-                    color: accentColor.shade400,
-                  ),
-                ),
+                    'Confidence: ${(_confidence * 100.0).toStringAsFixed(1)}%'),
               ],
-            ),
-            _buildButton(
-              icon: Icon(Icons.notification_important),
-              label: 'View all',
-              interval: Interval(0, 0.75),
             ),
             //Text('View all', style: theme.textTheme.caption),
           ],
@@ -179,7 +161,7 @@ class _PatientSearchScreenState extends State<PatientSearchScreen>
     );
   }
 
-  Widget _buildButton(
+  /*Widget _buildButton(
       {Widget? icon, String? label, required Interval interval}) {
     return RoundButton(
       icon: icon,
@@ -192,69 +174,15 @@ class _PatientSearchScreenState extends State<PatientSearchScreen>
       ),
       onPressed: () {},
     );
-  }
+  }*/
 
-  Widget _buildDashboardGrid() {
-    const step = 0.04;
-    const aniInterval = 0.75;
-
-    return GridView.count(
-      padding: const EdgeInsets.symmetric(
-        horizontal: 32.0,
-        vertical: 20,
-      ),
-      childAspectRatio: .9,
-      crossAxisSpacing: 5,
-      crossAxisCount: 3,
-      children: [
-        _buildButton(
-          icon: Icon(FontAwesomeIcons.user),
-          label: 'Patient',
-          interval: Interval(0, aniInterval),
-        ),
-        _buildButton(
-          icon: Icon(Icons.calendar_today_outlined),
-          label: 'Appointment',
-          interval: Interval(step, aniInterval + step),
-        ),
-        _buildButton(
-          icon: Icon(Icons.perm_contact_cal_rounded),
-          label: 'Contacts',
-          interval: Interval(step * 2, aniInterval + step * 2),
-        ),
-        _buildButton(
-          icon: Icon(FontAwesomeIcons.chartLine),
-          label: 'Analytics',
-          interval: Interval(0, aniInterval),
-        ),
-        _buildButton(
-          icon: Icon(Icons.approval),
-          label: 'Approval',
-          interval: Interval(step, aniInterval + step),
-        ),
-        _buildButton(
-          icon: Icon(FontAwesomeIcons.history),
-          label: 'History',
-          interval: Interval(step * 2, aniInterval + step * 2),
-        ),
-        _buildButton(
-          icon: Icon(FontAwesomeIcons.ellipsisH),
-          label: 'Other',
-          interval: Interval(0, aniInterval),
-        ),
-        _buildButton(
-          icon: Icon(FontAwesomeIcons.search, size: 20),
-          label: 'Search',
-          interval: Interval(step, aniInterval + step),
-        ),
-        _buildButton(
-          icon: Icon(FontAwesomeIcons.slidersH, size: 20),
-          label: 'Settings',
-          interval: Interval(step * 2, aniInterval + step * 2),
-        ),
-      ],
+  /*Widget _buildDictateGrid() {
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: <Widget>[],
     );
-  }
+  }*/
 
   // ignore: unused_element
   Widget _buildDebugButtons() {
@@ -278,15 +206,83 @@ class _PatientSearchScreenState extends State<PatientSearchScreen>
     );
   }
 
+  void _listen() async {
+    if (!_isListening) {
+      bool available = await _speech.initialize(
+        onStatus: (val) => print('onStatus: $val'),
+        onError: (val) => print('onError: $val'),
+      );
+      if (available) {
+        setState(() => _isListening = true);
+        _speech.listen(
+          onResult: (val) => setState(() {
+            _text = val.recognizedWords;
+            if (val.hasConfidenceRating && val.confidence > 0) {
+              _confidence = val.confidence;
+            }
+          }),
+        );
+      }
+    } else {
+      setState(() => _isListening = false);
+      _speech.stop();
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
 
+    /*final Map<String, HighlightedWord> _highlights = {
+      'medication': HighlightedWord(
+        onTap: () => print('medication'),
+        textStyle: const TextStyle(
+          color: Colors.blue,
+          fontWeight: FontWeight.bold,
+        ),
+      ),
+      'shoulder': HighlightedWord(
+        onTap: () => print('shoulder'),
+        textStyle: const TextStyle(
+          color: Colors.green,
+          fontWeight: FontWeight.bold,
+        ),
+      ),
+      'pain': HighlightedWord(
+        onTap: () => print('pain'),
+        textStyle: const TextStyle(
+          color: Colors.red,
+          fontWeight: FontWeight.bold,
+        ),
+      ),
+      'like': HighlightedWord(
+        onTap: () => print('like'),
+        textStyle: const TextStyle(
+          color: Colors.blueAccent,
+          fontWeight: FontWeight.bold,
+        ),
+      ),
+    };*/
+
     return WillPopScope(
-      onWillPop: () => _goToLogin(context),
+      onWillPop: () => _goToDashboard(context),
       child: SafeArea(
         child: Scaffold(
           appBar: _buildAppBar(theme),
+          floatingActionButtonLocation:
+              FloatingActionButtonLocation.centerFloat,
+          floatingActionButton: AvatarGlow(
+            animate: _isListening,
+            glowColor: Theme.of(context).primaryColor,
+            endRadius: 75.0,
+            duration: const Duration(milliseconds: 2000),
+            repeatPauseDuration: const Duration(milliseconds: 100),
+            repeat: true,
+            child: FloatingActionButton(
+              onPressed: _listen,
+              child: Icon(_isListening ? Icons.mic : Icons.mic_none),
+            ),
+          ),
           body: Container(
             width: double.infinity,
             height: double.infinity,
@@ -317,7 +313,31 @@ class _PatientSearchScreenState extends State<PatientSearchScreen>
                             ],
                           ).createShader(bounds);
                         },*/
-                      child: _buildDashboardGrid(),
+                      //child: _buildDictateGrid(),
+                      child: SingleChildScrollView(
+                        reverse: true,
+                        child: Container(
+                          padding: const EdgeInsets.fromLTRB(
+                              30.0, 30.0, 30.0, 150.0),
+                          /*child: TextHighlight(
+                            text: _text,
+                            words: _highlights,
+                            textStyle: const TextStyle(
+                              fontSize: 32.0,
+                              color: Colors.black,
+                              fontWeight: FontWeight.w400,
+                            ),
+                          ),*/
+                          child: Text(
+                            _text,
+                            style: const TextStyle(
+                              fontSize: 32.0,
+                              color: Colors.black,
+                              fontWeight: FontWeight.w400,
+                            ),
+                          ),
+                        ),
+                      ),
                     ),
                     //    ),
                   ],

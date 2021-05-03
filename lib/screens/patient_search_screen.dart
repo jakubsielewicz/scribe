@@ -1,23 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'transition_route_observer.dart';
-import 'widgets/fade_in.dart';
-import 'constants.dart';
-import 'widgets/animated_numeric_text.dart';
-import 'widgets/round_button.dart';
+import '../utilities/transition_route_observer.dart';
+import '../widgets/fade_in.dart';
+import '../utilities/constants.dart';
 
-class DashboardScreen extends StatefulWidget {
-  static const routeName = '/dashboard';
+class PatientSearchScreen extends StatefulWidget {
+  static const routeName = '/patientsearch';
 
   @override
-  _DashboardScreenState createState() => _DashboardScreenState();
+  _PatientSearchScreenState createState() => _PatientSearchScreenState();
 }
 
-class _DashboardScreenState extends State<DashboardScreen>
+class _PatientSearchScreenState extends State<PatientSearchScreen>
     with SingleTickerProviderStateMixin, TransitionRouteAware {
-  Future<bool> _goToLogin(BuildContext context) {
+  Future<bool> _goToDashboard(BuildContext context) {
     return Navigator.of(context)
-        .pushReplacementNamed('/')
+        .pushReplacementNamed('/dashboard')
         // we dont want to pop the screen, just replace it completely
         .then((_) => false);
   }
@@ -66,10 +64,10 @@ class _DashboardScreenState extends State<DashboardScreen>
       icon: const Icon(FontAwesomeIcons.bars),
       onPressed: () {},
     );
-    final signOutBtn = IconButton(
-      icon: const Icon(FontAwesomeIcons.signOutAlt),
+    final dashboardBtn = IconButton(
+      icon: Icon(Icons.home_rounded),
       color: theme.accentColor,
-      onPressed: () => _goToLogin(context),
+      onPressed: () => _goToDashboard(context),
     );
     final title = Center(
       child: Row(
@@ -111,7 +109,7 @@ class _DashboardScreenState extends State<DashboardScreen>
           offset: .3,
           curve: headerAniInterval,
           fadeDirection: FadeDirection.endToStart,
-          child: signOutBtn,
+          child: dashboardBtn,
         ),
       ],
       title: title,
@@ -140,55 +138,23 @@ class _DashboardScreenState extends State<DashboardScreen>
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
-                /*SizedBox(
-                  width: 5,
-                  height: 0.1,
-                ),*/
                 Text(
-                  'You have ',
+                  'Patient Search',
                   style: theme.textTheme.headline5!.copyWith(
                     fontWeight: FontWeight.w300,
-                    color: accentColor.shade600,
-                  ),
-                ),
-                AnimatedNumericText(
-                  initialValue: 1,
-                  targetValue: 7,
-                  curve: Interval(0, 1, curve: Curves.easeOut),
-                  controller: _loadingController!,
-                  style: theme.textTheme.headline5!.copyWith(
-                    fontWeight: FontWeight.w600,
-                    color: accentColor.shade600,
-                  ),
-                ),
-                Text(
-                  ' new notifications',
-                  style: theme.textTheme.headline5!.copyWith(
-                    fontWeight: FontWeight.w300,
-                    color: accentColor.shade600,
+                    color: accentColor.shade400,
                   ),
                 ),
               ],
             ),
-            /*_buildButton(
-              icon: Icon(Icons.notification_important),
-              label: 'View all',
-              interval: Interval(0.04, 0.8),
-            ),*/
-            Text(
-              'View all',
-              style: theme.textTheme.bodyText1!.copyWith(
-                fontWeight: FontWeight.w300,
-                color: accentColor.shade600,
-              ),
-            ),
+            //Text('View all', style: theme.textTheme.caption),
           ],
         ),
       ),
     );
   }
 
-  Widget _buildButton(
+  /*Widget _buildButton(
       {Widget? icon, String? label, required Interval interval}) {
     return RoundButton(
       icon: icon,
@@ -201,65 +167,20 @@ class _DashboardScreenState extends State<DashboardScreen>
       ),
       onPressed: () {},
     );
-  }
+  }*/
 
-  Widget _buildDashboardGrid() {
-    const step = 0.04;
-    const aniInterval = 0.75;
-
-    return GridView.count(
-      padding: const EdgeInsets.symmetric(
-        horizontal: 32.0,
-        vertical: 20,
-      ),
-      childAspectRatio: .9,
-      crossAxisSpacing: 5,
-      crossAxisCount: 3,
-      children: [
-        _buildButton(
-          icon: Icon(FontAwesomeIcons.user),
-          label: 'Patients',
-          interval: Interval(0, aniInterval),
-        ),
-        _buildButton(
-          icon: Icon(Icons.calendar_today_outlined),
-          label: 'Appointments',
-          interval: Interval(step, aniInterval + step),
-        ),
-        _buildButton(
-          icon: Icon(Icons.perm_contact_cal_rounded),
-          label: 'Contacts',
-          interval: Interval(step * 2, aniInterval + step * 2),
-        ),
-        _buildButton(
-          icon: Icon(FontAwesomeIcons.chartLine),
-          label: 'Analytics',
-          interval: Interval(0, aniInterval),
-        ),
-        _buildButton(
-          icon: Icon(Icons.approval),
-          label: 'Approvals',
-          interval: Interval(step, aniInterval + step),
-        ),
-        _buildButton(
-          icon: Icon(FontAwesomeIcons.history),
-          label: 'History',
-          interval: Interval(step * 2, aniInterval + step * 2),
-        ),
-        _buildButton(
-          icon: Icon(FontAwesomeIcons.ellipsisH),
-          label: 'Other',
-          interval: Interval(0, aniInterval),
-        ),
-        _buildButton(
-          icon: Icon(FontAwesomeIcons.search, size: 20),
-          label: 'Search',
-          interval: Interval(step, aniInterval + step),
-        ),
-        _buildButton(
-          icon: Icon(FontAwesomeIcons.slidersH, size: 20),
-          label: 'Settings',
-          interval: Interval(step * 2, aniInterval + step * 2),
+  Widget _buildPatientSearchGrid() {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: <Widget>[
+        Padding(
+          padding: EdgeInsets.symmetric(horizontal: 8, vertical: 16),
+          child: TextFormField(
+            autofocus: true,
+            decoration: InputDecoration(
+              labelText: 'Enter patient name',
+            ),
+          ),
         ),
       ],
     );
@@ -292,7 +213,7 @@ class _DashboardScreenState extends State<DashboardScreen>
     final theme = Theme.of(context);
 
     return WillPopScope(
-      onWillPop: () => _goToLogin(context),
+      onWillPop: () => _goToDashboard(context),
       child: SafeArea(
         child: Scaffold(
           appBar: _buildAppBar(theme),
@@ -326,7 +247,7 @@ class _DashboardScreenState extends State<DashboardScreen>
                             ],
                           ).createShader(bounds);
                         },*/
-                      child: _buildDashboardGrid(),
+                      child: _buildPatientSearchGrid(),
                     ),
                     //    ),
                   ],

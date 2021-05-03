@@ -2,10 +2,10 @@ import 'package:flutter/scheduler.dart' show timeDilation;
 import 'package:flutter/material.dart';
 // ignore: import_of_legacy_library_into_null_safe
 import 'package:flutter_login/flutter_login.dart';
-import 'constants.dart';
-import 'custom_route.dart';
 import 'dashboard_screen.dart';
-import 'users.dart';
+import '../utilities/constants.dart';
+import '../utilities/custom_route.dart';
+import '../utilities/users.dart';
 
 class LoginScreen extends StatelessWidget {
   static const routeName = '/auth';
@@ -59,12 +59,12 @@ class LoginScreen extends StatelessWidget {
       //   flushbarTitleError: 'Oh no!',
       //   flushbarTitleSuccess: 'Succes!',
       // ),
-      // theme: LoginTheme(
-      //   primaryColor: Colors.teal,
-      //   accentColor: Colors.yellow,
-      //   errorColor: Colors.deepOrange,
-      //   pageColorLight: Colors.indigo.shade300,
-      //   pageColorDark: Colors.indigo.shade500,
+      //theme: LoginTheme(
+      //primaryColor: Colors.teal,
+      //accentColor: Colors.yellow,
+      //errorColor: Colors.deepOrange,
+      //pageColorLight: Colors.indigo.shade300,
+      //pageColorDark: Colors.indigo.shade500,
       //   titleStyle: TextStyle(
       //     color: Colors.greenAccent,
       //     fontFamily: 'Quicksand',
@@ -120,7 +120,7 @@ class LoginScreen extends StatelessWidget {
       //       borderSide: BorderSide(color: Colors.grey, width: 5),
       //       borderRadius: inputBorder,
       //     ),
-      //   ),
+      // ),
       //   buttonTheme: LoginButtonTheme(
       //     splashColor: Colors.purple,
       //     backgroundColor: Colors.pinkAccent,

@@ -1,9 +1,8 @@
 import 'package:flutter/services.dart';
 import 'package:flutter/material.dart';
-import 'login_screen.dart';
-import 'dashboard_screen.dart';
-import 'patient_search_screen.dart';
-import 'transition_route_observer.dart';
+import 'screens/login_screen.dart';
+import 'screens/dashboard_screen.dart';
+import 'utilities/transition_route_observer.dart';
 
 void main() {
   SystemChrome.setSystemUIOverlayStyle(
@@ -20,12 +19,13 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Login',
+      debugShowCheckedModeBanner: false,
       theme: ThemeData(
         //brightness: Brightness.dark,
         primarySwatch: Colors.blue,
         accentColor: Colors.lightBlue,
+        visualDensity: VisualDensity.adaptivePlatformDensity,
         textSelectionTheme: TextSelectionThemeData(cursorColor: Colors.orange),
-        // fontFamily: 'SourceSansPro',
         textTheme: TextTheme(
           headline3: TextStyle(
             fontFamily: 'OpenSans',
@@ -36,12 +36,13 @@ class MyApp extends StatelessWidget {
           button: TextStyle(
             // OpenSans is similar to NotoSans but the uppercases look a bit better IMO
             fontFamily: 'OpenSans',
+            color: Colors.white,
           ),
           caption: TextStyle(
             fontFamily: 'NotoSans',
             fontSize: 12.0,
             fontWeight: FontWeight.normal,
-            color: Colors.deepPurple[300],
+            color: Colors.white,
           ),
           headline1: TextStyle(fontFamily: 'Quicksand'),
           headline2: TextStyle(fontFamily: 'Quicksand'),
@@ -61,7 +62,6 @@ class MyApp extends StatelessWidget {
       routes: {
         LoginScreen.routeName: (context) => LoginScreen(),
         DashboardScreen.routeName: (context) => DashboardScreen(),
-        PatientSearchScreen.routeName: (context) => PatientSearchScreen(),
       },
     );
   }
